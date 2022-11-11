@@ -1,0 +1,22 @@
+service: convert_soap_to_json
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage: dev # Set the default stage used. Default is dev
+  region: us-east-1 # Overwrite the default region used. Default is us-east-1
+  profile: production # The default profile to use with this service
+  memorySize: 512 # Overwrite the default memory size. Default is 1024
+
+functions:
+  usersCreate: # A function
+    handler: lamda.lambda_handler
+    events: # The events that trigger this function
+      - httpApi: "GET /lambda"
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
